@@ -35,7 +35,7 @@ slim Docker images).
 From a release tag, into `~/.cargo/bin`:
 
 ```sh
-cargo install --git https://github.com/wvmscs/geohash-lookup --tag v0.1.0 --locked
+cargo install --git https://github.com/wvmscs/geohash-lookup --tag v0.1.1 --locked
 geohash-lookup --version
 ```
 
@@ -56,7 +56,7 @@ In the host's `Cargo.toml`, without the command line (no `clap`), pinned to a ta
 
 ```toml
 [dependencies]
-geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.0", default-features = false }
+geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.1", default-features = false }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 ```
 
@@ -116,7 +116,7 @@ gap between two Nominatim requests applies to your instance too.
 
 ## 7. Releases (maintainers)
 
-Consumers pin tags (`tag = "v0.1.0"`), never a branch.
+Consumers pin tags (`tag = "v0.1.1"`), never a branch.
 
 1. On `main`, all checks pass:
    ```sh

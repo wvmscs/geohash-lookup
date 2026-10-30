@@ -50,7 +50,7 @@ Paris".
 ## Quick start
 
 ```sh
-cargo install --git https://github.com/wvmscs/geohash-lookup --tag v0.1.0 --locked
+cargo install --git https://github.com/wvmscs/geohash-lookup --tag v0.1.1 --locked
 geohash-lookup --user-agent "me/1.0 (me@example.org)" "Paris" "#u09t"
 ```
 

@@ -42,12 +42,22 @@ impl CellInput {
     }
 
     /// Like [`CellInput::parse`], a bare geohash being a geohash too: for fields and command
-    /// lines that took only geohashes so far. "Bern" is then the cell `bern`; type
-    /// "Bern, Switzerland" for the town.
+    /// lines that took only geohashes so far. "Bern" is then the cell `bern`, "75001" the cell
+    /// `75001`; type "Bern, Switzerland" or "75001 Paris" for the places.
+    ///
+    /// One word of 12 characters at most mixing letters and digits (`u0a`) is a mistyped
+    /// geohash: [`Error::InvalidGeohash`], not a place to look up.
     pub fn parse_lenient(typed: &str) -> Result<CellInput> {
         let s = typed.trim();
         if is_geohash(s) {
             return Ok(CellInput::Geohash(s.to_ascii_lowercase()));
+        }
+        let mixed = s.len() <= MAX_PRECISION
+            && s.chars().all(|c| c.is_ascii_alphanumeric())
+            && s.chars().any(|c| c.is_ascii_digit())
+            && s.chars().any(|c| c.is_ascii_alphabetic());
+        if mixed {
+            return Err(Error::InvalidGeohash(s.to_owned()));
         }
         CellInput::parse(s)
     }
@@ -92,6 +102,20 @@ mod tests {
         let g = |s: &str| CellInput::Geohash(s.into());
         assert_eq!(CellInput::parse_lenient("U09TV").unwrap(), g("u09tv"));
         assert_eq!(CellInput::parse_lenient("#u09tv").unwrap(), g("u09tv"));
+        assert_eq!(CellInput::parse_lenient("75001").unwrap(), g("75001"));
+        // A mistyped geohash is not a place
+        assert!(matches!(
+            CellInput::parse_lenient("u0a"),
+            Err(Error::InvalidGeohash(_))
+        ));
+        assert_eq!(
+            CellInput::parse_lenient("75001 Paris").unwrap(),
+            CellInput::Query("75001 Paris".into())
+        );
+        assert_eq!(
+            CellInput::parse_lenient("Albania").unwrap(),
+            CellInput::Query("Albania".into())
+        );
         assert_eq!(
             CellInput::parse_lenient("Paris").unwrap(),
             CellInput::Query("Paris".into())

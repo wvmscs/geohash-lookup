@@ -3,7 +3,7 @@
 
 [package]
 name = "geohash-lookup"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 rust-version = "1.88"
 description = "Place (address, town, country) or IP address to geohash cell, and back: BAN, Nominatim and a local GeoIP file."

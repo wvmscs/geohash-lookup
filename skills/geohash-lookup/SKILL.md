@@ -74,7 +74,7 @@ Reading results:
 ## Library (Rust)
 
 ```toml
-geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.0", default-features = false }
+geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.1", default-features = false }
 ```
 
 ```rust

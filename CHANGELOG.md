@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-30
+
+### Changed
+- `CellInput::parse_lenient`: one word of letters and digits that is not a geohash (`u0a`)
+  is a mistyped geohash (`Error::InvalidGeohash`), no longer a place sent to BAN and
+  Nominatim.
+
 ## [0.1.0] - 2026-10-30
 
 First version, public.

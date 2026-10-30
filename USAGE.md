@@ -24,7 +24,9 @@ when it holds spaces).
 
 A bare `u09t` is a place here: a valid geohash can also be a word ("bern", "def"). The
 bitchat tools, whose fields took only geohashes so far, read a bare geohash as a geohash
-(`CellInput::parse_lenient`).
+(`CellInput::parse_lenient`): there `75001` is a cell (type `75001 Paris` for the place), and
+one word mixing letters and digits that is not a geohash (`u0a`) is refused as a mistyped
+geohash rather than looked up.
 
 ### Options
 
@@ -158,7 +160,7 @@ A library (`geohash_lookup`) and a binary. The library is **async** (Tokio); `Ge
 
 ```toml
 [dependencies]
-geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.0", default-features = false }
+geohash-lookup = { git = "https://github.com/wvmscs/geohash-lookup", tag = "v0.1.1", default-features = false }
 tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 ```
 
