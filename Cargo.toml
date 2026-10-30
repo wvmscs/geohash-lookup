@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: 2026 William VITAL, FR (wvmscs)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+[package]
+name = "geohash-lookup"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Place (address, town, country) or IP address to geohash cell, and back: BAN, Nominatim and a local GeoIP file."
+license = "GPL-3.0-or-later"
+repository = "https://github.com/wvmscs/geohash-lookup"
+readme = "README.md"
+keywords = ["geohash", "geocoding", "geoip", "nominatim", "ban"]
+categories = ["command-line-utilities", "science::geo"]
+publish = false
+
+# Own workspace: the crate builds on its own, also inside another workspace.
+[workspace]
+
+[lib]
+name = "geohash_lookup"
+path = "src/lib.rs"
+
+[[bin]]
+name = "geohash-lookup"
+path = "src/main.rs"
+required-features = ["cli"]
+doc = false
+
+[features]
+default = ["cli"]
+# The command-line tool. For the library alone:
+#   geohash-lookup = { git = "...", tag = "v0.1.0", default-features = false }
+cli = ["dep:clap", "dep:anyhow", "tokio/macros", "tokio/rt-multi-thread"]
+
+[dependencies]
+anyhow = { version = "1", optional = true }
+clap = { version = "4", features = ["derive", "env"], optional = true }
+# Gunzip of the DB-IP download (pure Rust backend).
+flate2 = "1"
+geohash = "0.13"
+maxminddb = "0.32"
+# No bundled crypto provider: ring is installed process-wide if none is,
+# as in bitchat-geohash and bitchat-console.
+reqwest = { version = "0.13", default-features = false, features = ["json", "query", "rustls-no-provider"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+serde = { version = "1", features = ["derive"] }
+thiserror = "2"
+tokio = { version = "1", features = ["time", "sync"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

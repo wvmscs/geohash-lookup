@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2026 William VITAL, FR (wvmscs)
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+/target
+.DS_Store
+# GeoIP files (downloaded, CC BY 4.0, about 130 MB): never committed
+*.mmdb
+*.mmdb.gz
+*.mmdb.part
+# Rules of the author's local checkout (see AGENTS.md).
+/AGENTS.local.md
